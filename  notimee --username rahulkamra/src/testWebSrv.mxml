@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+
+
+<mx:Script>
+	<![CDATA[
+		import mx.controls.Alert;
+		import mx.rpc.events.FaultEvent;
+		import mx.rpc.events.ResultEvent;
+		public function res1(event:ResultEvent):void{
+			Alert.show(event.result.toString())
+		}
+		public function flt1(event:FaultEvent):void{
+			Alert.show(event.fault.toString())
+		}
+		public function clickMe():void{
+			webService.Get_Associate_Tasks.send({AssoId:71246,AccessKey:'F1A9382BDA74ADD9F33F0A3BCFF76A40BB9A95C47AC4FFDB6BD3D79211651A7'});
+			Alert.show('clicked')
+		}
+	]]>
+</mx:Script>
+<mx:Model id="loginDetails">
+
+<root>
+      <Associate_ID>71246</Associate_ID>
+      <AccessKey>FF1A9382BDA74ADD9F33F0A3BCFF76A40BB9A95C47AC4FFDB6BD3D79211651A7</AccessKey>
+    </root>
+	
+</mx:Model>
+	<mx:WebService id="webService"
+            wsdl="notime.wsdl">
+        <mx:operation name="Get_Associate_Tasks"
+                resultFormat="xml"
+                result="res1(event);"
+                fault="flt1(event);" >
+                
+                <!--<mx:request>
+                	<Associate_ID>71246</Associate_ID>
+	                 <AccessKey>FF1A9382BDA74ADD9F33F0A3BCFF76A40BB9A95C47AC4FFDB6BD3D79211651A7</AccessKey>
+                </mx:request>-->
+                </mx:operation>
+    </mx:WebService>
+    
+	<mx:Button x="39" y="176" label="Click Me" click="clickMe()"/>
+
+</mx:WindowedApplication>
