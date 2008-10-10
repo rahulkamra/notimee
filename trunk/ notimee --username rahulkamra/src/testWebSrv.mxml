@@ -1,46 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="1000" height="1000" xmlns:srv="com.satyam.*">
 
 
 <mx:Script>
 	<![CDATA[
+		import mx.binding.utils.BindingUtils;
+		import mx.rpc.AsyncToken;
+		import com.satyam.Get_Associate_TasksResultEvent;
+		import com.satyam.TSMS;
+		import com.satyam.Get_Activity_CategoriesResult_type0;
+		import mx.collections.ArrayCollection;
+		import com.satyam.Get_Activity_Categories_request;
+  		import com.satyam.Get_Associate_Tasks_request;
 		import mx.controls.Alert;
 		import mx.rpc.events.FaultEvent;
 		import mx.rpc.events.ResultEvent;
+		import com.satyam.Get_Associate_TasksResult_type0;
+		
+		[Bindable]
+		var temp:XMLList
 		public function res1(event:ResultEvent):void{
-			Alert.show(event.result.toString())
+		 temp=XMLList(event.result)
+		 
+		    var temp1:XMLList=temp.children().children().children()[1].children()
+		    for(var x in temp1){
+		    	Alert.show(temp1[x])
+		    }
+			testArea.text=temp1//temp.children().children().children()[1].children()
+			//Alert.show(temp.toString())
+	
 		}
 		public function flt1(event:FaultEvent):void{
 			Alert.show(event.fault.toString())
 		}
 		public function clickMe():void{
-			webService.Get_Associate_Tasks.send({AssoId:71246,AccessKey:'F1A9382BDA74ADD9F33F0A3BCFF76A40BB9A95C47AC4FFDB6BD3D79211651A7'});
-			Alert.show('clicked')
+			 webService.Get_Associate_Tasks.send()
+			
+			 Alert.show('clickASed')
 		}
 	]]>
 </mx:Script>
-<mx:Model id="loginDetails">
 
+
+<!--<mx:Model id="loginDetails">
 <root>
-      <Associate_ID>71246</Associate_ID>
-      <AccessKey>FF1A9382BDA74ADD9F33F0A3BCFF76A40BB9A95C47AC4FFDB6BD3D79211651A7</AccessKey>
-    </root>
-	
-</mx:Model>
+      <Associate_ID>60998</Associate_ID>
+      F1A9382BDA74ADD9F33F0A3BCFF76A40BB9A95C47AC4FFDB6BD3D79211651A7
+    <AccessKey>09F841740F7E48E9A02CF158443288E50D2A3D6CE2C446B39BEE4E32AC4C9432</AccessKey></root>
+</mx:Model>  -->
+
 	<mx:WebService id="webService"
-            wsdl="notime.wsdl">
+            wsdl="http://ontime.satyam.com/Webservices/TSMS.asmx?wsdl" >
+            
         <mx:operation name="Get_Associate_Tasks"
-                resultFormat="xml"
+                resultFormat="e4x"
                 result="res1(event);"
-                fault="flt1(event);" >
-                
-                <!--<mx:request>
-                	<Associate_ID>71246</Associate_ID>
-	                 <AccessKey>FF1A9382BDA74ADD9F33F0A3BCFF76A40BB9A95C47AC4FFDB6BD3D79211651A7</AccessKey>
-                </mx:request>-->
-                </mx:operation>
+                fault="flt1(event);">
+                 
+                <mx:request>
+                	<AssoId>60998</AssoId>
+	                 <AccessKey>09F841740F7E48E9A02CF158443288E50D2A3D6CE2C446B39BEE4E32AC4C9432</AccessKey>
+                </mx:request>
+               </mx:operation>
     </mx:WebService>
     
-	<mx:Button x="39" y="176" label="Click Me" click="clickMe()"/>
+    
+   
+	<mx:Button x="22" y="9" label="Click Me" click="clickMe()"/>
+	<mx:TextArea x="593" y="10" height="290" width="364" id="testArea"/>
+	<mx:DataGrid x="10" y="49" dataProvider="{temp}">
 
+	</mx:DataGrid>
 </mx:WindowedApplication>
