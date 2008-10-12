@@ -18,13 +18,16 @@
 		import com.satyam.Get_Associate_TasksResult_type0;
 		
 		[Bindable]
-		var temp:XMLList
+		public var temp:XMLList
+		public var projectDictinary:Dictionary;
+		
+		
 		public function res1(event:ResultEvent):void{
-		 temp=XMLList(event.result)
-		 
-		    var temp1:XMLList=temp.children().children().children()[1].children()
-		    for(var x in temp1){
-		    	Alert.show(temp1[x])
+		    var temp1:XMLList=XMLList(event.result).children().children().children()[1].children()
+		    
+		    for(var count in temp1){
+		    	
+		    	Alert.show(temp1[x].SNo)
 		    }
 			testArea.text=temp1//temp.children().children().children()[1].children()
 			//Alert.show(temp.toString())
@@ -44,13 +47,13 @@
 
 <!--<mx:Model id="loginDetails">
 <root>
-      <Associate_ID>60998</Associate_ID>
+      <Associate_ID>60998,71228</Associate_ID>
       F1A9382BDA74ADD9F33F0A3BCFF76A40BB9A95C47AC4FFDB6BD3D79211651A7
-    <AccessKey>09F841740F7E48E9A02CF158443288E50D2A3D6CE2C446B39BEE4E32AC4C9432</AccessKey></root>
+    <AccessKey>09F841740F7E48E9A02CF158443288E50D2A3D6CE2C446B39BEE4E32AC4C9432,B59F08115737439B890C8F71C97D01368EF134D67C02471FB3471D6CEA1EDFA9</AccessKey></root>
 </mx:Model>  -->
 
 	<mx:WebService id="webService"
-            wsdl="http://ontime.satyam.com/Webservices/TSMS.asmx?wsdl" >
+            wsdl="notime.wsdl" >
             
         <mx:operation name="Get_Associate_Tasks"
                 resultFormat="e4x"
