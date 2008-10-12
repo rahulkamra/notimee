@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="300" height="400" >
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="300" height="400" creationComplete="init()">
 <mx:Script>
 	<![CDATA[
+		import mx.controls.Alert;
 		import mx.effects.Resize;
+		
+		
+		private var noTimeSqlConn:SQLConnection
+		private var noTimeDb:File;
+		public function init():void{
+			noTimeDb = File.documentsDirectory.resolvePath("NoTimeDb.db");
+			//noTimeDb=new File("/"+"NoTimeDb.db");
+			noTimeSqlConn=new SQLConnection();
+			noTimeSqlConn.open(noTimeDb);
+			Alert.show(File.separator)
+		}
+		
 		public function changeState():void{
 			var resize:Resize=new Resize();
 			resize.heightTo=446;
@@ -11,6 +24,7 @@
 			resize.play(null);
 			this.currentState='afterLogin';
 		}
+		
 	]]>
 </mx:Script>
 	<mx:states>
@@ -37,7 +51,7 @@
 	<mx:TextInput x="115" y="126" id="textinput2"/>
 	<mx:TextInput x="115" y="174" id="textinput1"/>
 	<mx:Label x="29" y="128" text="UserName" color="#000000" id="label1"/>
-	<mx:Label x="29" y="178" text="Password" color="#000000" id="label2"/>
+	<mx:Label x="29" y="178" text="Access Key" color="#000000" id="label2"/>
 	<mx:ApplicationControlBar x="8" y="24" width="278" height="48" id="applicationcontrolbar1">
 		<mx:Label text="No Time " width="243" height="46" fontSize="24"   fontFamily="Comic Sans MS" color="#000000" textAlign="center"  id="label3"/>
 	</mx:ApplicationControlBar>
