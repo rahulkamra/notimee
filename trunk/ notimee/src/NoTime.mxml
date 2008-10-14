@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="300" height="400" creationComplete="init()">
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="300" height="400" creationComplete="init()" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#000000, #000000]">
 <mx:Script>
 	<![CDATA[
 		import mx.controls.Alert;
@@ -50,13 +50,13 @@
 	</mx:states>
 	<mx:TextInput x="115" y="126" id="textinput2"/>
 	<mx:TextInput x="115" y="174" id="textinput1"/>
-	<mx:Label x="29" y="128" text="UserName" color="#000000" id="label1"/>
-	<mx:Label x="29" y="178" text="Access Key" color="#000000" id="label2"/>
-	<mx:ApplicationControlBar x="8" y="24" width="278" height="48" id="applicationcontrolbar1">
+	<mx:Label x="29" y="128" text="UserName" color="#901010" id="label1"/>
+	<mx:Label x="29" y="178" text="Access Key" color="#901010" id="label2"/>
+	<mx:ApplicationControlBar x="8" y="24" width="278" height="48" id="applicationcontrolbar1" fillAlphas="[1.0, 1.0]" fillColors="[#901010, #901010]">
 		<mx:Label text="No Time " width="243" height="46" fontSize="24"   fontFamily="Comic Sans MS" color="#000000" textAlign="center"  id="label3"/>
 	</mx:ApplicationControlBar>
-	<mx:CheckBox x="115" y="222" label="Remember Password" color="#000000" id="checkbox2"/>
-	<mx:CheckBox x="115" y="252" label="Automatically Login" color="#000000" id="checkbox1"/>
+	<mx:CheckBox x="115" y="222" label="Remember Password" color="#901010" id="checkbox2"/>
+	<mx:CheckBox x="115" y="252" label="Automatically Login" color="#901010" id="checkbox1"/>
 	<mx:Button x="115" y="308" label="Login" color="#000000" click="changeState()" id="button1"/>
 	
 	
