@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<projectRoot>
+  <url value="http://ontime.satyam.com/Webservices/TSMS.asmx?wsdl">
+    <service name="TSMS">
+      <port name="TSMSSoap">
+        <operations>
+          <operation name="Get_Associate_Tasks(parameters: Get_Associate_Tasks): Get_Associate_TasksResponse"/>
+          <operation name="Get_Activity_Categories(parameters: Get_Activity_Categories): Get_Activity_CategoriesResponse"/>
+          <operation name="Save_Task(parameters: Save_Task): Save_TaskResponse"/>
+          <operation name="Save_TimeSheet_Header(parameters: Save_TimeSheet_Header): Save_TimeSheet_HeaderResponse"/>
+          <operation name="Submit_TimeSheet(parameters: Submit_TimeSheet): Submit_TimeSheetResponse"/>
+        </operations>
+      </port>
+    </service>
+    <asPackage absPath="C:\Documents and Settings\rk71246\Desktop\NoTime Bck\NoTime\src\com\satyam" name="com.satyam">
+      <mainAsClass name="TSMS.as"/>
+      <otherAsClass name="Get_Activity_CategoriesResult_type0.as"/>
+      <otherAsClass name="BaseTSMSSchema.as"/>
+      <otherAsClass name="Get_Activity_CategoriesResultEvent.as"/>
+      <otherAsClass name="Get_Associate_TasksResult_type0.as"/>
+      <otherAsClass name="Save_TaskResultEvent.as"/>
+      <otherAsClass name="Get_Associate_Tasks_request.as"/>
+      <otherAsClass name="Submit_TimeSheet_request.as"/>
+      <otherAsClass name="Save_Task_request.as"/>
+      <otherAsClass name="Get_Associate_TasksResultEvent.as"/>
+      <otherAsClass name="Get_Activity_Categories_request.as"/>
+      <otherAsClass name="ITSMS.as"/>
+      <otherAsClass name="Save_TimeSheet_Header_request.as"/>
+      <otherAsClass name="BaseTSMS.as"/>
+      <otherAsClass name="Submit_TimeSheetResultEvent.as"/>
+      <otherAsClass name="Save_TimeSheet_HeaderResultEvent.as"/>
+    </asPackage>
+  </url>
+</projectRoot>
