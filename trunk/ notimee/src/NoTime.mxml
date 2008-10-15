@@ -2,19 +2,29 @@
 <mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="300" height="400" creationComplete="init()" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#000000, #000000]">
 <mx:Script>
 	<![CDATA[
+		import mx.collections.ArrayCollection;
+		import mx.rpc.events.FaultEvent;
+		import mx.rpc.events.ResultEvent;
 		import mx.controls.Alert;
 		import mx.effects.Resize;
 		
 		
 		private var noTimeSqlConn:SQLConnection
 		private var noTimeDb:File;
+		public var projectDetails:XMLList;
+		public var taskData:ArrayCollection=new ArrayCollection();
+		
+		
+		
+		
 		public function init():void{
 			noTimeDb = File.documentsDirectory.resolvePath("NoTimeDb.db");
 			//noTimeDb=new File("/"+"NoTimeDb.db");
-			noTimeSqlConn=new SQLConnection();
-			noTimeSqlConn.open(noTimeDb);
-			Alert.show(File.separator)
+			//noTimeSqlConn=new SQLConnection();
+			//noTimeSqlConn.open(noTimeDb);
+			//Alert.show(File.separator)
 		}
+		
 		
 		public function changeState():void{
 			var resize:Resize=new Resize();
@@ -24,9 +34,41 @@
 			resize.play(null);
 			this.currentState='afterLogin';
 		}
+		public function sendLoginDetails():void{
+			Alert.show('Calling')
+			webService.Get_Associate_Tasks.send()
+		}
+		
+		public function handleLoginResponse(event:ResultEvent):void{
+			var temp1:XMLList=XMLList(event.result).children().children().children()[1].Table
+		    
+		    for(var count in temp1){
+		    	Alert.show(temp1[count].Task_Name)
+		    	taskData.addItem({myLabel:temp1[count].Task_Name,id:temp1[count].Task_Name})
+		    }
+		    changeState()
+			//Alert.show(temp.toString())
+		}
+		public function invalidLogin(event:FaultEvent):void{
+			Alert.show(event.message.toString())
+		}
 		
 	]]>
 </mx:Script>
+			<mx:WebService id="webService"
+			            wsdl="notime.wsdl" >
+			            
+			        <mx:operation name="Get_Associate_Tasks"
+			                resultFormat="e4x"
+			                result="handleLoginResponse(event);"
+			                fault="invalidLogin(event);">
+			                 
+		                <mx:request>
+		                	<AssoId>{userName.text}</AssoId>
+			                 <AccessKey>{password.text}</AccessKey>
+		                </mx:request>
+			       </mx:operation>
+			    </mx:WebService>
 	<mx:states>
 		<mx:State name="afterLogin">
 			<mx:SetProperty name="width" value="472"/>
@@ -34,22 +76,25 @@
 			<mx:RemoveChild target="{checkbox1}"/>
 			<mx:RemoveChild target="{checkbox2}"/>
 			<mx:RemoveChild target="{button1}"/>
-			<mx:RemoveChild target="{textinput1}"/>
-			<mx:RemoveChild target="{textinput2}"/>
+			<mx:RemoveChild target="{password}"/>
+			<mx:RemoveChild target="{userName}"/>
 			<mx:RemoveChild target="{label1}"/>
 			<mx:RemoveChild target="{label2}"/>
 			<mx:RemoveChild target="{label3}"/>
 			<mx:RemoveChild target="{applicationcontrolbar1}"/>
 			<mx:AddChild position="lastChild">
-				<mx:Label x="82" y="30" text="Welcome"/>
+				<mx:Label x="82" y="30" text="Welcome" color="#901010"/>
 			</mx:AddChild>
 			<mx:AddChild position="lastChild">
 				<mx:Label x="146" y="30"/>
 			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:List x="34" y="80" itemRenderer="TaskRenderer" dataProvider="{taskData}" backgroundColor="#000000"></mx:List>
+			</mx:AddChild>
 		</mx:State>
 	</mx:states>
-	<mx:TextInput x="115" y="126" id="textinput2"/>
-	<mx:TextInput x="115" y="174" id="textinput1"/>
+	<mx:TextInput x="115" y="126" id="userName"/>
+	<mx:TextInput x="115" y="174" id="password"/>
 	<mx:Label x="29" y="128" text="UserName" color="#901010" id="label1"/>
 	<mx:Label x="29" y="178" text="Access Key" color="#901010" id="label2"/>
 	<mx:ApplicationControlBar x="8" y="24" width="278" height="48" id="applicationcontrolbar1" fillAlphas="[1.0, 1.0]" fillColors="[#901010, #901010]">
@@ -57,7 +102,7 @@
 	</mx:ApplicationControlBar>
 	<mx:CheckBox x="115" y="222" label="Remember Password" color="#901010" id="checkbox2"/>
 	<mx:CheckBox x="115" y="252" label="Automatically Login" color="#901010" id="checkbox1"/>
-	<mx:Button x="115" y="308" label="Login" color="#000000" click="changeState()" id="button1"/>
+	<mx:Button x="115" y="308" label="Login" color="#000000" click="sendLoginDetails()" id="button1"/>
 	
 	
 	
