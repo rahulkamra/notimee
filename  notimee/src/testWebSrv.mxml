@@ -6,29 +6,23 @@
 	<![CDATA[
 		import mx.binding.utils.BindingUtils;
 		import mx.rpc.AsyncToken;
-		import com.satyam.Get_Associate_TasksResultEvent;
-		import com.satyam.TSMS;
-		import com.satyam.Get_Activity_CategoriesResult_type0;
 		import mx.collections.ArrayCollection;
-		import com.satyam.Get_Activity_Categories_request;
-  		import com.satyam.Get_Associate_Tasks_request;
 		import mx.controls.Alert;
 		import mx.rpc.events.FaultEvent;
 		import mx.rpc.events.ResultEvent;
-		import com.satyam.Get_Associate_TasksResult_type0;
 		
-		[Bindable]
+		         
 		public var temp:XMLList
-		public var projectDictinary:Dictionary;
+		public var projectDetails:XMLList;
 		
 		
 		public function res1(event:ResultEvent):void{
-		    var temp1:XMLList=XMLList(event.result).children().children().children()[1].children()
+		    var temp1:XMLList=XMLList(event.result).children().children().children()[1].Table
 		    
-		    for(var count in temp1){
-		    	
-		    	Alert.show(temp1[x].SNo)
-		    }
+		    /*for(var count in temp1){
+		    	projectDetails.addItem(temp1[count]);
+		    	Alert.show(temp1[count].Task_Name)
+		    }*/
 			testArea.text=temp1//temp.children().children().children()[1].children()
 			//Alert.show(temp.toString())
 	

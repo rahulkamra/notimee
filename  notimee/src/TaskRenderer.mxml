@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<mx:RadioButton  color="#901010" xmlns:mx="http://www.adobe.com/2006/mxml">
+
+<mx:groupName>taskGroup</mx:groupName>
+	<mx:label> {data.myLabel} </mx:label>
+	<mx:id>{data.id}</mx:id>
+</mx:RadioButton>
+
