@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" backgroundColor="white">
+	<mx:states>
+		<mx:State name="afterLogin">
+			<mx:RemoveChild target="{applicationcontrolbar1}"/>
+			<mx:AddChild position="lastChild">
+				<mx:Image x="10" y="10" width="231" height="94"/>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:ApplicationControlBar x="330" y="10" width="508" height="94">
+				</mx:ApplicationControlBar>
+			</mx:AddChild>
+			<mx:AddChild position="lastChild">
+				<mx:VBox x="12" y="112" height="348" width="246">
+					<mx:ApplicationControlBar width="231" height="130" cornerRadius="20" fillAlphas="[1.0, 1.0]" fillColors="[#60DFFF, #60DFFF]" id="tv">
+						<mx:Canvas width="100%" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+							<mx:LinkButton x="10" y="5" label="Television" width="193" textAlign="left" cornerRadius="7" click="handleBaseElementClick(event)"/>
+							<mx:LinkButton x="46" y="46" label="Sony" width="157" textAlign="left" cornerRadius="7"/>
+							<mx:LinkButton x="46" y="77" label="LG" width="157" textAlign="left" cornerRadius="7"/>
+						</mx:Canvas>
+					</mx:ApplicationControlBar>
+					<mx:ApplicationControlBar width="231" height="42" cornerRadius="20" fillAlphas="[1.0, 1.0]" fillColors="[#60DFFF, #60DFFF]" id="ac">
+						<mx:Canvas width="100%" height="100%" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+							<mx:LinkButton x="10" y="4" label="Air Conditioner" width="193" textAlign="left" cornerRadius="7" click="handleBaseElementClick(event)"/>
+							<mx:LinkButton x="46" y="46" label="Hitachi" width="157" textAlign="left" cornerRadius="7"/>
+							<mx:LinkButton x="46" y="77" label="LG" width="157" textAlign="left" cornerRadius="7"/>
+						</mx:Canvas>
+					</mx:ApplicationControlBar>
+				
+				</mx:VBox>
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
+	
+	<mx:Script source="afterLogin.as"/>
+<mx:Script>
+	<![CDATA[
+		import mx.controls.Alert;
+		import mx.effects.Rotate;
+		public var tempLoginButtonEffect:Rotate=new Rotate();
+		
+		public function effectLoginButton(event:MouseEvent):void{
+			tempLoginButtonEffect.target=loginId;
+			tempLoginButtonEffect.angleFrom=0
+			tempLoginButtonEffect.angleTo=360
+			tempLoginButtonEffect.duration=1000
+			if(!tempLoginButtonEffect.isPlaying){
+			tempLoginButtonEffect.play();
+			}
+		}
+	]]>
+</mx:Script>
+
+	<mx:ApplicationControlBar x="355.5" y="79" width="313" height="284" fillAlphas="[1.0, 0.82]" fillColors="[#60DFFF, #FFFFFF]" id="applicationcontrolbar1">
+		<mx:Canvas width="100%" height="100%" fontFamily="Comic Sans MS">
+			<mx:Label x="41" y="94" text="Username" fontSize="17"/>
+			<mx:Label x="41" y="147" text="Password" fontSize="18"/>
+			<mx:ApplicationControlBar x="41" y="10" width="201">
+				<mx:Label text="Login" fontSize="24" width="100%" textAlign="center"/>
+			</mx:ApplicationControlBar>
+			<mx:Button x="119" y="204" label="Login" fillColors="[#FFFFFF, #FFFFFF]" alpha="1.0" borderColor="#000000" themeColor="#000000" cornerRadius="8" mouseOver="effectLoginButton(event)" id="loginId"/>
+			<mx:TextInput x="134" y="101" width="132"/>
+			<mx:TextInput x="135" y="154" width="131"/>
+		
+		</mx:Canvas>
+	
+	</mx:ApplicationControlBar>
+	<mx:Parallel id="newAccordian">
+		<mx:Resize id="allminimize" duration="1000" heightTo="42"/>
+		<mx:Resize id="currentMaximize" duration="1000" heightTo="130" target="{currentSelected}"/>
+	</mx:Parallel>
+
+</mx:Application>
