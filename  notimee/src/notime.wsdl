@@ -267,10 +267,10 @@
   </wsdl:binding>
   <wsdl:service name="TSMS">
     <wsdl:port name="TSMSSoap" binding="tns:TSMSSoap">
-      <soap:address location="http://ontime.satyam.com/Webservices/TSMS.asmx" />
+      <soap:address location="https://ontime.satyam.com/Webservices/TSMS.asmx" />
     </wsdl:port>
     <wsdl:port name="TSMSSoap12" binding="tns:TSMSSoap12">
-      <soap12:address location="http://ontime.satyam.com/Webservices/TSMS.asmx" />
+      <soap12:address location="https://ontime.satyam.com/Webservices/TSMS.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

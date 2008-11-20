@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="300" height="400" creationComplete="init()" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#000000, #000000]">
+<mx:Script source="com/satyam/getAssociateTasks.as"/>
 <mx:Script>
 	<![CDATA[
 		import mx.collections.ArrayCollection;
@@ -12,45 +13,17 @@
 		private var noTimeSqlConn:SQLConnection
 		private var noTimeDb:File;
 		public var projectDetails:XMLList;
+		[Bindable]
 		public var taskData:ArrayCollection=new ArrayCollection();
-		
+		public var connection:SQLConnection=new SQLConnection();
 		
 		
 		
 		public function init():void{
-			noTimeDb = File.documentsDirectory.resolvePath("NoTimeDb.db");
-			//noTimeDb=new File("/"+"NoTimeDb.db");
-			//noTimeSqlConn=new SQLConnection();
-			//noTimeSqlConn.open(noTimeDb);
-			//Alert.show(File.separator)
-		}
-		
-		
-		public function changeState():void{
-			var resize:Resize=new Resize();
-			resize.heightTo=446;
-			resize.widthTo=472;
-			resize.target=this
-			resize.play(null);
-			this.currentState='afterLogin';
-		}
-		public function sendLoginDetails():void{
-			Alert.show('Calling')
-			webService.Get_Associate_Tasks.send()
-		}
-		
-		public function handleLoginResponse(event:ResultEvent):void{
-			var temp1:XMLList=XMLList(event.result).children().children().children()[1].Table
-		    
-		    for(var count in temp1){
-		    	Alert.show(temp1[count].Task_Name)
-		    	taskData.addItem({myLabel:temp1[count].Task_Name,id:temp1[count].Task_Name})
-		    }
-		    changeState()
-			//Alert.show(temp.toString())
-		}
-		public function invalidLogin(event:FaultEvent):void{
-			Alert.show(event.message.toString())
+			var temp:File=File.applicationDirectory.resolvePath('noTimeDB.db')
+			connection.addEventListener(SQLEvent.OPEN,databaseOpened);
+			connection.addEventListener(SQLErrorEvent.ERROR,databaseNotFound);
+			connection.open(temp)
 		}
 		
 	]]>
@@ -73,8 +46,8 @@
 		<mx:State name="afterLogin">
 			<mx:SetProperty name="width" value="472"/>
 			<mx:SetProperty name="height" value="446"/>
-			<mx:RemoveChild target="{checkbox1}"/>
-			<mx:RemoveChild target="{checkbox2}"/>
+			<mx:RemoveChild target="{rememberPass}"/>
+			<mx:RemoveChild target="{autoLogin}"/>
 			<mx:RemoveChild target="{button1}"/>
 			<mx:RemoveChild target="{password}"/>
 			<mx:RemoveChild target="{userName}"/>
@@ -89,20 +62,22 @@
 				<mx:Label x="146" y="30"/>
 			</mx:AddChild>
 			<mx:AddChild position="lastChild">
-				<mx:List x="34" y="80" itemRenderer="TaskRenderer" dataProvider="{taskData}" backgroundColor="#000000"></mx:List>
+				<mx:List x="32" y="75" itemRenderer="TaskRenderer" dataProvider="{taskData}" backgroundColor="#000000"></mx:List>
 			</mx:AddChild>
+			<mx:RemoveChild target="{statusLogin}"/>
 		</mx:State>
 	</mx:states>
-	<mx:TextInput x="115" y="126" id="userName"/>
-	<mx:TextInput x="115" y="174" id="password"/>
+	<mx:TextInput x="115" y="126" id="userName" width="160"/>
+	<mx:TextInput x="115" y="174" id="password" width="160"/>
 	<mx:Label x="29" y="128" text="UserName" color="#901010" id="label1"/>
 	<mx:Label x="29" y="178" text="Access Key" color="#901010" id="label2"/>
 	<mx:ApplicationControlBar x="8" y="24" width="278" height="48" id="applicationcontrolbar1" fillAlphas="[1.0, 1.0]" fillColors="[#901010, #901010]">
 		<mx:Label text="No Time " width="243" height="46" fontSize="24"   fontFamily="Comic Sans MS" color="#000000" textAlign="center"  id="label3"/>
 	</mx:ApplicationControlBar>
-	<mx:CheckBox x="115" y="222" label="Remember Password" color="#901010" id="checkbox2"/>
-	<mx:CheckBox x="115" y="252" label="Automatically Login" color="#901010" id="checkbox1"/>
+	<mx:CheckBox x="115" y="222" label="Remember Password" color="#901010" id="rememberPass"/>
+	<mx:CheckBox x="115" y="252" label="Automatically Login" color="#901010" id="autoLogin"/>
 	<mx:Button x="115" y="308" label="Login" color="#000000" click="sendLoginDetails()" id="button1"/>
+	<mx:Label x="115" y="80" id="statusLogin"/>
 	
 	
 	
